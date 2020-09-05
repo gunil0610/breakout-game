@@ -3,6 +3,8 @@
 const rulesBtn = document.getElementById("rules-btn"),
   closeBtn = document.getElementById("close-btn"),
   rules = document.getElementById("rules"),
+  gameOver = document.getElementById("gameover"),
+  playBtn = document.getElementById("play-btn"),
   canvas = document.getElementById("canvas"),
   ctx = canvas.getContext("2d");
 
@@ -148,6 +150,7 @@ function moveBall() {
 
   // Hit bottom wall - Lose
   if (ball.y + ball.size > canvas.height) {
+    gameOver.classList.add("show");
     resetGame();
   }
 }
@@ -156,8 +159,13 @@ function moveBall() {
 function resetGame() {
   showAllBricks();
   score = 0;
+  ball.dx = 0;
+  ball.dy = 0;
   ball.x = canvas.width / 2;
   ball.y = canvas.height / 2;
+}
+
+function startGame() {
   ball.dx = 4;
   ball.dy = -4;
 }
@@ -232,3 +240,7 @@ document.addEventListener("keyup", keyUp);
 // Rules and close event handler
 rulesBtn.addEventListener("click", () => rules.classList.add("show"));
 closeBtn.addEventListener("click", () => rules.classList.remove("show"));
+playBtn.addEventListener("click", () => {
+  gameOver.classList.remove("show");
+  startGame();
+});
